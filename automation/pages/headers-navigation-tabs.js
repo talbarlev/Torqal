@@ -12,7 +12,7 @@ export default class HeadersNavigationTabs extends BasePage {
     async navigateToTab(tabName) {
         const tabToClick = await $(this.pageLoadElementLoactor).$(`${this.TabsLocator}*=${tabName}`)
 
-        tabToClick.click() 
+        await tabToClick.click() 
     }
 
 }

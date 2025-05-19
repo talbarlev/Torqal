@@ -2,7 +2,7 @@ import HomePage from "./home-page.js";
 import ArrowListHorizontalComponent from "./list/arrow-list-component.js";
 import LazyLoadListComponent from "./list/lazy-load-list-component.js";
 
-export class ProductsBasePage extends HomePage {
+export default class ProductsBasePage extends HomePage {
     get TitleOfPage() {
         return $("h1[data-test-id='DiscoveryPageTitle']")
     }

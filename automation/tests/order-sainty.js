@@ -1,15 +1,19 @@
-import { DiscoveryHomePage } from "../pages/home-page.js";
+import { DISCVOERY_TABS_OPTION_ENGLISH } from "../data/constant-option.js";
+import DiscoveryHomePage from "../pages/discovery-page.js";
+import ResturantPage from "../pages/resturant-page.js";
 
 describe('Orders [user not logged in]', function () {
     it(`Order [Resturant] -  One item from first resturant on page`, async function () {
-        DiscoveryHomePage.open('')
 
-        DiscoveryHomePage.waitForPageToLoad();
+        await DiscoveryHomePage.open()
 
-        DiscoveryHomePage.HeaderTabs.navigateToTab('Resturant');
+        await DiscoveryHomePage.waitForPageLoad();
 
-        ResturantsPage.Allresturants.chooseResturant();
+        await DiscoveryHomePage.HeadersNavigationTabs.navigateToTab(DISCVOERY_TABS_OPTION_ENGLISH.RESTURANTS);
 
+        await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
+
+        await browser.pause(30000)
         // // Widget ? make selection 
         // ProductsCatalogPage.selectItem();
 

@@ -16,7 +16,7 @@ export default class LazyLoadListComponent {
         return elements;
     }
 
-    async waitForListToLoad({ timeout = 3000 }) {
+    async waitForListToLoad(timeout = 3000) {
         await browser.waitUntil(async () => {
             const elements = await $$(this.elementsLocator);
             return await elements.length > 0
@@ -25,7 +25,7 @@ export default class LazyLoadListComponent {
 
     // TODO : Implement by name when relevant 
 
-    async chooseElementFromListByIndex({ index = 1 }) {
+    async chooseElementFromListByIndex(index = 1) {
 
         const products = await this.getAllElementInList();
 
