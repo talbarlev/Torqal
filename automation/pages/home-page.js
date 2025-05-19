@@ -3,6 +3,7 @@ import HeadersNavigationTabs from "./headers-navigation-tabs.js";
 import BasePage from "./page.js";
 
 export default class HomePage extends BasePage {
+
     get Headerbar() {
         return new Headerbar();
     }

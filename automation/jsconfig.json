@@ -1,10 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "es6",
+    "module": "commonjs",
     "checkJs": true,
-    "types": ["@wdio/globals/types"]
+    "baseUrl": ".",
+    "types": [
+      "node",
+      "@wdio/globals/types",
+      "mocha"
+    ]
   },
-  "include": ["./**/*.js"]
+  "exclude": [
+    "node_modules"
+  ],
+ 
 }
