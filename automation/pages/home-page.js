@@ -10,4 +10,7 @@ export default class HomePage extends BasePage {
     get HeadersNavigationTabs() {
         return new HeadersNavigationTabs();
     }
+
+    // TODO :
+    // Add about, google play/app store buttons....(down page)
 }
