@@ -8,20 +8,20 @@ export default class ArrowListHorizontalComponent {
     }
 
     get backArrowButton() {
-        return $("button[aria-label='Previous']")
+        return browser.waitForElement("button[aria-label='Previous']", "back button")
     }
 
     get nextArrowButton() {
-        return $("button[aria-label='Next']")
+        return browser.waitForElement("button[aria-label='Next']", "next button")
     }
 
 
     async clickOnArrow(direction = "Next") {
         if (direction === "Next") {
-            await this.nextArrowButton.click();
+            await this.nextArrowButton.clickSafely("next button");
         }
         else if (direction === "Previous") {
-            await this.backArrowButton.click();
+            await this.backArrowButton.clickSafely("back button");
         } else {
             throw new Error(`Invalid direction: ${direction}. Use "Next" or "Previous".`);
         }

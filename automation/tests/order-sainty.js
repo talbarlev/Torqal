@@ -13,7 +13,6 @@ describe('Orders [user not logged in]', function () {
 
         await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
 
-        await browser.pause(30000)
         // // Widget ? make selection 
         // ProductsCatalogPage.selectItem();
 

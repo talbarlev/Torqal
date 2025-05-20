@@ -1,7 +1,9 @@
 import BasePage from "./page.js";
 
 export default class HeadersNavigationTabs extends BasePage {
-    get pageLoadElementLoactor() {
+
+    // Override
+    get pageLocator() {
         return ".i13rwx4e";
     }
 
@@ -10,9 +12,20 @@ export default class HeadersNavigationTabs extends BasePage {
     }
 
     async navigateToTab(tabName) {
-        const tabToClick = await $(this.pageLoadElementLoactor).$(`${this.TabsLocator}*=${tabName}`)
+        const tabs = await browser.waitForElement(this.pageLocator, "Container of tabs");
+      
+        const tabToClick = await tabs.waitForElement(`${this.TabsLocator}*=${tabName}`, "tab");
 
-        await tabToClick.click() 
+        await tabToClick.clickSafely(`Tab : ${tabName}`)
+
+        // const tabToClick = await browser.waitForElement(this.pageLocator, "Container of tabs")
+        //     .waitForElement(`${this.TabsLocator}*=${tabName}`, "tab")
+
+        // await tabToClick.clickSafely(`Tab : ${tabName}`)
+
+        // const tabToClick = await $(this.pageLocator).$(`${this.TabsLocator}*=${tabName}`)
+
+        // await tabToClick.click() 
     }
 
 }

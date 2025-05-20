@@ -11,16 +11,21 @@ export default class LazyLoadListComponent {
         // add wait
         await this.waitForListToLoad();
 
-        const elements = $$(this.elementsLocator);
+        const elements = await browser.waitForElements(this.elementsLocator, "list of elements");
 
         return elements;
     }
 
     async waitForListToLoad(timeout = 3000) {
         await browser.waitUntil(async () => {
-            const elements = await $$(this.elementsLocator);
-            return await elements.length > 0
-        }, { timeout, timeoutMsg: "" })
+
+            const elements = await browser.waitForElements(this.elementsLocator);
+
+            console.log(`length of list it : ${elements.length} `)
+
+            return await elements.length > 0;
+
+        }, { timeout, timeoutMsg: `After ${timeout}ms, element length is not in range` })
     }
 
     // TODO : Implement by name when relevant 
@@ -33,7 +38,7 @@ export default class LazyLoadListComponent {
 
         await product.scrollIntoView();
 
-        await product.click();
+        await product.clickSafely("item in list");
 
     }
 }
