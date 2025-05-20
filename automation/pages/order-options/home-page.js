@@ -1,6 +1,6 @@
-import Headerbar from "./headerbar.js";
-import HeadersNavigationTabs from "./headers-navigation-tabs.js";
-import BasePage from "./page.js";
+import Headerbar from "../component/headerbar.js";
+import HeadersNavigationTabs from "../component/headers-navigation-tabs.js";
+import BasePage from "../page.js";
 
 export default class HomePage extends BasePage {
 

@@ -1,4 +1,4 @@
-import BasePage from "./page.js";
+import BasePage from "../page.js";
 
 export default class HeadersNavigationTabs extends BasePage {
 

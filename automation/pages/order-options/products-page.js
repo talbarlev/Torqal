@@ -1,6 +1,6 @@
 import HomePage from "./home-page.js";
-import ArrowListHorizontalComponent from "./list/arrow-list-component.js";
-import LazyLoadListComponent from "./list/lazy-load-list-component.js";
+import ArrowListHorizontalComponent from "../component/list/arrow-list-component.js";
+import LazyLoadListComponent from "../component/list/lazy-load-list-component.js";
 
 export default class ProductsBasePage extends HomePage {
     // Locator ?
