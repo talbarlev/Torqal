@@ -79,7 +79,6 @@ class CustomCommand {
             try {
                 await element.click();
 
-                // Remove
                 return;
             }
             catch (err) {

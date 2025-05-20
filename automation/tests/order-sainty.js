@@ -1,3 +1,4 @@
+import  ItemsPage  from "pages/items-page.js";
 import { DISCVOERY_TABS_OPTION_ENGLISH } from "../data/constant-option.js";
 import DiscoveryHomePage from "../pages/order-options/discovery-page.js";
 import ResturantPage from "../pages/order-options/resturant-page.js";
@@ -15,9 +16,10 @@ describe('Orders [user not logged in]', function () {
 
         await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
 
-        // // Widget ? make selection 
         await ItemsPage.clickOnPlusForItemByIndex(1);
 
+        
+        
         await SelectionPopUp.tickChoices();
 
         price = await SelectionPopUp.getPrice();
@@ -26,11 +28,8 @@ describe('Orders [user not logged in]', function () {
         await SelectionPopUp.addToOrder();
 
         const dataFromShowItems = await ItemsPage.getDataFromShowItems();
-        
+
         expect(dataFromShowItems.price).equals(price)
         expect(dataFromShowItems.amount).equals(amountOfItems)
-
-
-
     });
 });
