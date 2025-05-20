@@ -2,7 +2,7 @@ import customCommands from "./custom-commands.js";
 
 export const config = {
     runner: 'local',
-    specs: ['./tests/order-sainty.js'],
+    discovery: ['./tests/order-sainty.js'],
     maxInstances: 1,
     capabilities: [{
         browserName: 'chrome',
@@ -27,5 +27,21 @@ export const config = {
 
         await browser.setWindowSize(1024, 768);
 
+    },
+
+    async beforeTest(test) {
+        Logger.info(`--- Running test ${test.title}`);
+
+    },
+
+    async afterTest(test, error, result, duration, passed, retries) {
+        if (result.passed === true)
+            Logger.info("Test passed! 😀 😃 😄");
+
+        else
+            await Logger.failWithScreenShot("Test failed!!! 😕", test);
     }
+
+
+
 };
