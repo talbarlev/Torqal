@@ -1,5 +1,6 @@
-// @ts-nocheck
-// import Logger from "../Logger.js";
+
+import Logger from "../automation/Logger.js";
+
 const configTimeout = 10000;
 
 class CustomCommand {
@@ -7,7 +8,7 @@ class CustomCommand {
         async function waitForElementBrowser(selector, description, { shouldBeVisible = true, timeout = configTimeout } = {}) {
             const element = await browser.$(selector);
 
-            // Logger.info(`Searching for element : '${description}' `);
+            Logger.info(`Searching for element : '${description}' `);
 
             await element.waitForExist({ timeout: configTimeout, reverse: false, timeoutMsg: `'${description}' not found after ${configTimeout} ms` });
 
@@ -19,6 +20,7 @@ class CustomCommand {
         }
 
         async function waitForElementsBrowser(selector, description, { shouldBeVisible = true, timeout = configTimeout } = {}) {
+            Logger.info(`Searching for elements : '${description}' `);
 
             const toTime = Date.now() + timeout;
             let elements = 0;
@@ -40,7 +42,7 @@ class CustomCommand {
                 if (doTryFindElement) {
                     throw new Error(`❌ '${description}' was not found on the page`);
                 } else {
-                    console.warn(`⚠️ '${description}' was not found — skipping wait`);
+                    Logger.warning(`⚠️ '${description}' was not found — skipping wait`);
                     return;
                 }
             }
@@ -55,7 +57,7 @@ class CustomCommand {
             }, { timeout, interval: 100, timeoutMsg: `⏰ '${description}' did not disappear after ${timeout}ms`, }
             );
 
-            console.info(`✅ '${description}' disappeared as expected`);
+            Logger.info(`✅ '${description}' disappeared as expected`);
         }
 
 
@@ -68,7 +70,7 @@ class CustomCommand {
                 await element.waitForDisplayed({ timeout, reverse: false, timeoutMsg: `'${elementDescription}' not diplayed after ${timeout} ms` });
             }
 
-            // Logger.info(`Clicking on '${elementDescription}' (locator: ${element.selector})`);
+            Logger.info(`Clicking on '${elementDescription}' (locator: ${element.selector})`);
 
             if (isWaitForClickable) {
                 await browser.waitUntil(() => element.isClickable(), { timeout, timeoutMsg: `${elementDescription} was not clickable after ${timeout} ms ` });
@@ -81,25 +83,25 @@ class CustomCommand {
                 return;
             }
             catch (err) {
-                // Logger.warning(`Click on '${elementDescription}' (locator: ${element.selector}) failed: ${err}. Trying to scroll into view...`);
+                Logger.warning(`Click on '${elementDescription}' (locator: ${element.selector}) failed: ${err}. Trying to scroll into view...`);
             }
 
             await element.moveTo();
 
             try {
                 await element.click();
-                // Logger.info(`Clicking on '${elementDescription}' (locator: ${element.selector})`);
+                Logger.info(`Clicking on '${elementDescription}' (locator: ${element.selector})`);
 
                 return;
             }
             catch (err) {
-                // Logger.warning(`Clicking after scroll into view also failed: ${err}`);
+                Logger.warning(`Clicking after 'moveTo' also failed: ${err}`);
             }
 
-            // Logger.info(`Clicking on '${elementDescription}' (locator: ${element.selector})`);
+            Logger.info(`Clicking on '${elementDescription}' (locator: ${element.selector})`);
 
             if (forceClick) {
-                // Logger.info(`Regular click failed. Forcing click on ${element.selector}`);
+                Logger.info(`Regular click failed. Forcing click on ${element.selector}`);
 
                 await browser.execute(
                     "arguments[0].click()", element
@@ -107,7 +109,7 @@ class CustomCommand {
 
             }
             else {
-                // Logger.info(`clickSafely on '${elementDescription}'(${element.selector}) failed with parameters: isWaitForClickable= ${isWaitForClickable}, timeout= ${timeout}, forceClick= ${forceClick}`);
+                 Logger.info(`clickSafely on '${elementDescription}'(${element.selector}) failed with parameters: isWaitForClickable= ${isWaitForClickable}, timeout= ${timeout}, forceClick= ${forceClick}`);
 
             }
         }
@@ -117,7 +119,7 @@ class CustomCommand {
 
             const element = await container.$(`${selector}`);
 
-            // Logger.info(`Searching for element : '${description}' `);
+            Logger.info(`Searching for element : '${description}' `);
 
             await element.waitForExist({ timeout, reverse: false, timeoutMsg: `'${description}' not found after ${timeout} ms` });
 

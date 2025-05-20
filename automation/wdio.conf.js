@@ -3,12 +3,12 @@ import customCommands from "./custom-commands.js";
 export const config = {
     runner: 'local',
     specs: ['./tests/order-sainty.js'],
-    maxInstances: 5,
+    maxInstances: 1,
     capabilities: [{
         browserName: 'chrome',
         acceptInsecureCerts: true,
     }],
-    logLevel: 'error',
+    logLevel: 'info',
     bail: 0,
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
@@ -21,9 +21,11 @@ export const config = {
     },
     injectGlobals: true,
     services: [],
-    before: async function (browser) {
+
+    async before() {
         customCommands.addCoreCommands();
 
-        // await this.browser.setWindowSize(1024, 768);
+        await browser.setWindowSize(1024, 768);
+
     }
 };

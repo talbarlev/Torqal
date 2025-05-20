@@ -1,3 +1,5 @@
+import Logger from "../../Logger.js";
+
 export default class LazyLoadListComponent {
     get pageLoadElementLoactor() {
         return "";
@@ -8,7 +10,6 @@ export default class LazyLoadListComponent {
     }
 
     async getAllElementInList() {
-        // add wait
         await this.waitForListToLoad();
 
         const elements = await browser.waitForElements(this.elementsLocator, "list of elements");
@@ -21,7 +22,7 @@ export default class LazyLoadListComponent {
 
             const elements = await browser.waitForElements(this.elementsLocator);
 
-            console.log(`length of list it : ${elements.length} `)
+            Logger.info(`length of list it : ${elements.length} `)
 
             return await elements.length > 0;
 
