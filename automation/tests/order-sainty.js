@@ -3,7 +3,7 @@ import DiscoveryHomePage from "../pages/order-options/discovery-page.js";
 import ResturantPage from "../pages/order-options/resturant-page.js";
 import ItemOptionModal from "../pages/modal/item-options-modal.js"
 import StorePage from "../pages/order-options/store-page.js";
-import itemsStorePage from "../pages/items-store-page.js";
+import ItemsStorePage from "../pages/items-store-page.js";
 import ListGridPage from "../pages/listgrid-page.js";
 
 import { expect } from 'chai';
@@ -53,11 +53,11 @@ describe('Orders [user not logged in]', function () {
 
         await ListGridPage.chooseElementFromListByIndex();
 
-        await itemsStorePage.clickPlusButtonByIndex(itemIndex);
+        await ItemsStorePage.clickPlusButtonByIndex(itemIndex);
 
-        priceOfItem = await itemsStorePage.getPriceOfItem(itemIndex);
+        priceOfItem = await ItemsStorePage.getPriceOfItem(itemIndex);
 
-        const dataFromShowItems = await itemsStorePage.headerbar.getDataFromShowItems();
+        const dataFromShowItems = await ItemsStorePage.headerbar.getDataFromShowItems();
 
         expect(dataFromShowItems.amount == amountOfItems,
             `amount of item selected :"${amountOfItems}". amount in show items :"${dataFromShowItems.amount}"`).to.be.true;
