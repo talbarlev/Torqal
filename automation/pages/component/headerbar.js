@@ -3,18 +3,17 @@ import BasePage from "../page.js";
 
 export default class Headerbar extends BasePage {
 
-    // Exist in other header as well
-    // @ts-ignore
+    // Locator shared with other header components
     get pageLocator() {
         return "header.r7nbhzh"
     }
 
-    // Bad locator
-    get amoumtShowItemButtonLocator() {
+    // NOTE: These locators are fragile and should be improved if possible
+    get amountShowItemButtonLocator() {
         return ".i1dyoq4e"
     }
 
-    // Bad locator
+    // NOTE: These locators are fragile and should be improved if possible
     get priceShowItemButtonLocator() {
         return ".t1ff47gi"
     }
@@ -48,29 +47,30 @@ export default class Headerbar extends BasePage {
 
     }
 
+    /**
+    * Retrieve price and amount text from the Show Items button in the header
+    * Includes fallback logic if the button is not found inside the header
+    */
     async getDataFromShowItems() {
         let showItem;
 
         try {
-            // @ts-ignore
             const container = await browser.waitForElement(this.pageLocator, "header")
             showItem = await container.waitForElement(this.showItemsButtonLocator, "showItem");
 
         }
+
         catch (err) {
             Logger.warning(`"${err}", fallback to global show item button`)
 
-            // @ts-ignore
             showItem = await browser.waitForElement(`[aria-live='assertive'] ${this.showItemsButtonLocator}`, "showItem");
         }
 
         const price = await (await showItem.waitForElement(this.priceShowItemButtonLocator, "price")).getText();
 
-        const amount = await (await showItem.waitForElement(this.amoumtShowItemButtonLocator, "amount")).getText();
+        const amount = await (await showItem.waitForElement(this.amountShowItemButtonLocator, "amount")).getText();
 
-        return {
-            price, amount
-        }
+        return { price, amount }
     }
 
 }

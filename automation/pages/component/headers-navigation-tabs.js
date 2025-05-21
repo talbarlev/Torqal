@@ -1,31 +1,24 @@
 import BasePage from "../page.js";
 
 export default class HeadersNavigationTabs extends BasePage {
-
     // Override
     get pageLocator() {
         return ".i13rwx4e";
     }
 
-    get TabsLocator() {
+    get tabsLocator() {
         return "[role='tab']";
     }
 
+    /**
+   * Navigate to a specific tab by its visible name
+   * @param {string} tabName - The visible name of the tab to click
+   */
     async navigateToTab(tabName) {
-        const tabs = await browser.waitForElement(this.pageLocator, "Container of tabs");
-      
-        const tabToClick = await tabs.waitForElement(`${this.TabsLocator}*=${tabName}`, "tab");
+        const tabsContainer = await browser.waitForElement(this.pageLocator, "Tabs container");
 
-        await tabToClick.clickSafely(`Tab : ${tabName}`)
+        const tabToClick = await tabsContainer.waitForElement(`${this.tabsLocator}*=${tabName}`, `Tab: ${tabName}`);
 
-        // const tabToClick = await browser.waitForElement(this.pageLocator, "Container of tabs")
-        //     .waitForElement(`${this.TabsLocator}*=${tabName}`, "tab")
-
-        // await tabToClick.clickSafely(`Tab : ${tabName}`)
-
-        // const tabToClick = await $(this.pageLocator).$(`${this.TabsLocator}*=${tabName}`)
-
-        // await tabToClick.click() 
+        await tabToClick.clickSafely(tabName);
     }
-
 }

@@ -29,8 +29,7 @@ export default class LazyLoadListComponent {
         }, { timeout, timeoutMsg: `After ${timeout}ms, element length is not in range` })
     }
 
-    // TODO : Implement by name when relevant 
-
+    // TODO: Implement choosing element by name when relevant
     async chooseElementFromListByIndex(index = 1) {
 
         const products = await this.getAllElementInList();

@@ -3,9 +3,8 @@ import ArrowListHorizontalComponent from "../component/list/arrow-list-component
 import LazyLoadListComponent from "../component/list/lazy-load-list-component.js";
 
 export default class ProductsBasePage extends HomePage {
-    // Locator ?
 
-    get TitleOfPage() {
+    get pageTitle() {
         return browser.waitForElement("h1[data-test-id='DiscoveryPageTitle']", "Headline title")
     }
 
@@ -13,7 +12,7 @@ export default class ProductsBasePage extends HomePage {
         return browser.waitForElement("[data-test-id='sorting.button']", "filter button");
     }
 
-    get arrowListOfProducts() {
+    get arrowListProduct() {
         return new ArrowListHorizontalComponent();
     }
 
@@ -22,6 +21,6 @@ export default class ProductsBasePage extends HomePage {
     }
 
     async naviagteToFiltersWidget() {
-        // To impelemnt
+        // TODO
     }
 }

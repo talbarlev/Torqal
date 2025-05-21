@@ -4,14 +4,14 @@ import BasePage from "../page.js";
 
 export default class HomePage extends BasePage {
 
-    get Headerbar() {
+    get headerbar() {
         return new Headerbar();
     }
 
-    get HeadersNavigationTabs() {
+    get headersNavigationTabs() {
         return new HeadersNavigationTabs();
     }
 
-    // TODO :
-    // Add about, google play/app store buttons....(down page)
+    // TODO:
+    // Add buttons for About, Google Play, and App Store in the page footer
 }

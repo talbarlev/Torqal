@@ -1,7 +1,7 @@
 import ItemsPage from "../pages/items-page.js";
 import DiscoveryHomePage from "../pages/order-options/discovery-page.js";
 import ResturantPage from "../pages/order-options/resturant-page.js";
-import ItemOptionModal from "../pages/modal/tic-options-item-modal.js"
+import ItemOptionModal from "../pages/modal/item-options-modal.js"
 
 import { expect } from 'chai';
 
@@ -17,7 +17,7 @@ describe('Orders [user not logged in]', function () {
 
         await DiscoveryHomePage.waitForPageLoad();
 
-        await DiscoveryHomePage.HeadersNavigationTabs.navigateToTab(DISCVOERY_TABS_OPTION_ENGLISH.RESTURANTS);
+        await DiscoveryHomePage.headersNavigationTabs.navigateToTab(DISCVOERY_TABS_OPTION_ENGLISH.RESTURANTS);
 
         await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
 

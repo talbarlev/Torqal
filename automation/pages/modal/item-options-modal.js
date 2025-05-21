@@ -11,12 +11,12 @@ class ItemOptionsModal extends BasePage {
         return browser.waitForElement(this.pageLocator);
     }
 
-    get confirmOrdeButton() {
+    get confirmOrderButton() {
         return browser.waitForElement(`${this.pageLocator} button[type='submit']`, "addToOrder / updateOrder");
     }
 
-    get sectionsToTic() {
-        return browser.waitForElements("[data-capture-id='section']", "section of tic");
+    get sectionsContainer() {
+        return "[data-capture-id='section']";
     }
 
     get checkboxToTicLocator() {
@@ -42,7 +42,7 @@ class ItemOptionsModal extends BasePage {
         }
 
         const container = await browser.waitForElement(this.pageLocator, "container of the popup widget");
-        const sections = await container.waitForElements("[data-capture-id='section']", "sections");
+        const sections = await container.waitForElements(this.sectionsContainer, "sections");
 
         const section = sections[indexOfSection];
 
@@ -74,17 +74,17 @@ class ItemOptionsModal extends BasePage {
     }
 
     async getPrice() {
-        const buttonElement = await this.confirmOrdeButton;
+        const buttonElement = await this.confirmOrderButton;
 
         const priceText = (await buttonElement.waitForElement(this.priceLocator, "price in the button")).getText();
 
         return priceText;
     }
 
-    // TODO : add validation for alert
+    // TODO: Add validation for alert messages
     async addToOrder(waitToDisappear = true) {
-        const button = await this.confirmOrdeButton;
-        
+        const button = await this.confirmOrderButton;
+
         await button.clickSafely("add to order button");
 
         if (waitToDisappear) {
