@@ -185,11 +185,12 @@ class CustomCommand {
         browser.addCommand("waitForElements", waitForElementsBrowser);
 
         browser.addCommand("waitForElements", waitForElementsElement, true);
+        
+        browser.addCommand("waitForElement", waitForElementBrowser);
 
         browser.addCommand("waitForElement", waitForElementElement, true);
-
-        browser.addCommand("waitForElement", waitForElementBrowser);
     }
+
 }
 
 export default new CustomCommand;

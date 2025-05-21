@@ -1,7 +1,10 @@
-import ItemsPage from "../pages/items-page.js";
+import ItemsResturantPage from "../pages/items-resturant-page.js";
 import DiscoveryHomePage from "../pages/order-options/discovery-page.js";
 import ResturantPage from "../pages/order-options/resturant-page.js";
 import ItemOptionModal from "../pages/modal/item-options-modal.js"
+import StorePage from "../pages/order-options/store-page.js";
+import itemsStorePage from "../pages/items-store-page.js";
+import  ListGridPage  from "../pages/listgrid-page.js";
 
 import { expect } from 'chai';
 
@@ -9,11 +12,11 @@ import { DISCVOERY_TABS_OPTION_ENGLISH } from "../data/constant-option.js";
 // TODO : waits ? for page to load ?
 
 describe('Orders [user not logged in]', function () {
-    it(`Order [Resturant] -  One item from first resturant on page`, async function () {
+    it(`Order [Resturant] - ["all resturant"] One item from first resturant on page`, async function () {
         const amountOfItems = 1;
         let priceOfItem;
 
-        await DiscoveryHomePage.open()
+        await DiscoveryHomePage.open();
 
         await DiscoveryHomePage.waitForPageLoad();
 
@@ -21,16 +24,42 @@ describe('Orders [user not logged in]', function () {
 
         await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
 
-        await ItemsPage.clickPlusButtonByIndex(1);
+        await ItemsResturantPage.clickPlusButtonByIndex(1);
 
         await ItemOptionModal.ticFromAllSections();
 
         priceOfItem = await ItemOptionModal.getPrice();
 
-        // wait to disapear
         await ItemOptionModal.addToOrder();
 
-        const dataFromShowItems = await ItemsPage.headerbar.getDataFromShowItems();
+        const dataFromShowItems = await ItemsResturantPage.headerbar.getDataFromShowItems();
+
+        expect(dataFromShowItems.amount == amountOfItems,
+            `amount of item selected :"${amountOfItems}". amount in show items :"${dataFromShowItems.amount}"`).to.be.true;
+        expect(dataFromShowItems.price == priceOfItem, `price of item selected :"${priceOfItem}". 
+            price in show items :"${dataFromShowItems.price}"`).to.be.true
+    });
+
+    it(`Order [Store] - ["lets shop for"] One item from first store on page`, async function () {
+        const amountOfItems = 1, itemIndex = 1;
+        let priceOfItem;
+
+
+        await DiscoveryHomePage.open();
+
+        await DiscoveryHomePage.waitForPageLoad();
+
+        await DiscoveryHomePage.headersNavigationTabs.navigateToTab(DISCVOERY_TABS_OPTION_ENGLISH.STORES);
+
+        await StorePage.arrowListProduct.chooseElementFromListByIndex(1);
+
+        await ListGridPage.chooseElementFromListByIndex(1);
+
+        await itemsStorePage.clickPlusButtonByIndex(itemIndex);
+
+        priceOfItem = await itemsStorePage.getPriceOfItem(itemIndex);
+
+        const dataFromShowItems = await itemsStorePage.headerbar.getDataFromShowItems();
 
         expect(dataFromShowItems.amount == amountOfItems,
             `amount of item selected :"${amountOfItems}". amount in show items :"${dataFromShowItems.amount}"`).to.be.true;

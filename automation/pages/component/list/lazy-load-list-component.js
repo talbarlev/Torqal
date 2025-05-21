@@ -1,4 +1,4 @@
-import { waitForListToReachLength } from "../../../helper/web-commands.js";
+import { waitForListToReachLength } from "../../../helper/utils.js";
 
 export default class LazyLoadListComponent {
     get pageLoadElementLoactor() {
@@ -17,13 +17,12 @@ export default class LazyLoadListComponent {
         return elements;
     }
 
-    async waitForListToLoad(timeout = 3000) {
+    async waitForListToLoad() {
         await waitForListToReachLength(this.elementsLocator);
     }
 
     // TODO: Implement choosing element by name when relevant
     async chooseElementFromListByIndex(index = 1) {
-
         const products = await this.getAllElementInList();
 
         const product = products[index];
