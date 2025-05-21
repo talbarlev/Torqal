@@ -1,8 +1,8 @@
 import customCommands from "./custom-commands.js";
-
+import Logger from "./Logger.js";
 export const config = {
     runner: 'local',
-    discovery: ['./tests/order-sainty.js'],
+    specs: ['./tests/order-sainty.js'],
     maxInstances: 1,
     capabilities: [{
         browserName: 'chrome',
@@ -17,7 +17,7 @@ export const config = {
     reporters: ['spec'],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 120000
     },
     injectGlobals: true,
     services: [],

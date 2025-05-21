@@ -1,6 +1,6 @@
-import Logger from "../../Logger.js";
+import Logger from "../../../Logger.js";
 
-export default class LazyLoadListComponent {
+export default class ItemListComponent {
     get pageLoadElementLoactor() {
         return "";
     }
