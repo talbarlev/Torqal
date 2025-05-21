@@ -40,7 +40,7 @@ describe('Orders [user not logged in]', function () {
             price in show items :"${dataFromShowItems.price}"`).to.be.true
     });
 
-    it.only(`Order [Store] - ["lets shop for"] One item from first store on page`, async function () {
+    it(`Order [Store] - ["lets shop for"] One item from first store on page`, async function () {
         const amountOfItems = 1, itemIndex = 1;
         let priceOfItem;
 

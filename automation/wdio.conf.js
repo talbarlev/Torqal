@@ -1,12 +1,13 @@
 import customCommands from "./custom-commands.js";
 import Logger from "./Logger.js";
+
 export const config = {
     runner: 'local',
     specs: ['./tests/order-sainty.js'],
-    maxInstances: 1,
+    maxInstances: 5,
     capabilities: [{
+        maxInstances: 5,
         browserName: 'chrome',
-        acceptInsecureCerts: true,
     }],
     logLevel: 'info',
     bail: 0,
@@ -19,9 +20,11 @@ export const config = {
         ui: 'bdd',
         timeout: 120000
     },
+    'wdio:options': {
+        bidi: false,
+    },
     injectGlobals: true,
     services: [],
-
     async before() {
         customCommands.addCoreCommands();
 
