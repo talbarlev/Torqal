@@ -1,3 +1,5 @@
+import { waitForListToReachLength } from "../../../helper/utils.js";
+
 export default class ArrowListHorizontalComponent {
 
     get pageLoadElementLoactor() {
@@ -16,10 +18,17 @@ export default class ArrowListHorizontalComponent {
         return browser.waitForElement("button[aria-label='Next']", "next button")
     }
 
+    async getAllElementInList() {
+        await waitForListToReachLength(this.elementsLocator);
+
+        const elements = await browser.waitForElements(this.elementsLocator, "list of elements");
+
+        return elements;
+    }
     /**
-        * Clicks on the arrow button in the specified direction
-        * @param {string} direction - "Next" or "Previous"
-        */
+    * Clicks on the arrow button in the specified direction
+    * @param {string} direction - "Next" or "Previous"
+    */
     async clickOnArrow(direction = "Next") {
         if (direction === "Next") {
             await this.nextArrowButton.clickSafely("next button");
@@ -29,6 +38,16 @@ export default class ArrowListHorizontalComponent {
         } else {
             throw new Error(`Invalid direction: ${direction}. Use "Next" or "Previous".`);
         }
+    }
+
+    async chooseElementFromListByIndex(index = 1) {
+        const products = await this.getAllElementInList();
+
+        const product = products[index];
+
+        await product.scrollIntoView();
+
+        await product.clickSafely("item in list");
     }
 }
 

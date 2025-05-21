@@ -30,7 +30,7 @@ export default class Headerbar extends BasePage {
 
     }
 
-    get Profile() {
+    get profile() {
 
     }
 

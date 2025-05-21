@@ -1,13 +1,8 @@
-import Headerbar from "./component/headerbar.js";
-import BasePage from "./page.js";
+import { waitForListToReachLength } from "../helper/utils.js";
+import ItemBasePage from "./item-base-page.js";
 
 // Make in BASE when needed
-export class ItemsPage extends BasePage {
-
-    get headerbar() {
-        return new Headerbar();
-    }
-
+export class ItemsResturantPage extends ItemBasePage {
     get itemsLocator() {
         return "button[data-test-id='horizontal-item-card-button']"
     }
@@ -20,15 +15,13 @@ export class ItemsPage extends BasePage {
 
     // TODO: Handle potential popup that might block the click action
     async clickPlusButtonByIndex(index = 0) {
-
-        // TODO: Replace fixed pause with a smarter waiting strategy
-       await browser.pause(4000);
+        await waitForListToReachLength(this.itemsLocator);
 
         const itemElements = await this.items;
-        
+
         // TODO: Remove forceClick and properly handle any blocking popup
         await itemElements[index].clickSafely("item", { forceClick: true, isWaitForClickable: false });
     }
 }
 
-export default new ItemsPage()
+export default new ItemsResturantPage()
