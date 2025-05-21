@@ -1,4 +1,4 @@
-import Logger from "../../../Logger.js";
+import { waitForListToReachLength } from "../../../helper/web-commands.js";
 
 export default class LazyLoadListComponent {
     get pageLoadElementLoactor() {
@@ -18,15 +18,7 @@ export default class LazyLoadListComponent {
     }
 
     async waitForListToLoad(timeout = 3000) {
-        await browser.waitUntil(async () => {
-
-            const elements = await browser.waitForElements(this.elementsLocator);
-
-            Logger.info(`length of list it : ${elements.length} `)
-
-            return await elements.length > 0;
-
-        }, { timeout, timeoutMsg: `After ${timeout}ms, element length is not in range` })
+        await waitForListToReachLength(this.elementsLocator);
     }
 
     // TODO: Implement choosing element by name when relevant

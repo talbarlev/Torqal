@@ -17,9 +17,9 @@ export default class ArrowListHorizontalComponent {
     }
 
     /**
-        * Clicks on the arrow button in the specified direction
-        * @param {string} direction - "Next" or "Previous"
-        */
+    * Clicks on the arrow button in the specified direction
+    * @param {string} direction - "Next" or "Previous"
+    */
     async clickOnArrow(direction = "Next") {
         if (direction === "Next") {
             await this.nextArrowButton.clickSafely("next button");

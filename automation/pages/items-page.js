@@ -1,3 +1,4 @@
+import { waitForListToReachLength } from "../helper/web-commands.js";
 import Headerbar from "./component/headerbar.js";
 import BasePage from "./page.js";
 
@@ -21,11 +22,10 @@ export class ItemsPage extends BasePage {
     // TODO: Handle potential popup that might block the click action
     async clickPlusButtonByIndex(index = 0) {
 
-        // TODO: Replace fixed pause with a smarter waiting strategy
-       await browser.pause(4000);
+        await waitForListToReachLength(this.itemsLocator);
 
         const itemElements = await this.items;
-        
+
         // TODO: Remove forceClick and properly handle any blocking popup
         await itemElements[index].clickSafely("item", { forceClick: true, isWaitForClickable: false });
     }
