@@ -9,7 +9,6 @@ import ListGridPage from "../pages/listgrid-page.js";
 import { expect } from 'chai';
 
 import { DISCVOERY_TABS_OPTION_ENGLISH } from "../data/constant-option.js";
-// TODO : waits ? for page to load ?
 
 describe('Orders [user not logged in]', function () {
     it(`Order [Resturant] - ["all resturant"] One item from first resturant on page`, async function () {
