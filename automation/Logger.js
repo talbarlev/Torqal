@@ -42,13 +42,17 @@ class Logger {
 
     async screenShot(test = undefined, message) {
         const time = new Date();
-        const timestamp = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}.${time.getMilliseconds()}`;
+        const timestamp = `${time.getHours()}-${time.getMinutes()}-${time.getSeconds()}-${time.getMilliseconds()}`;
 
         const uniqueFileName = `${message}-${timestamp}.png`;
 
-        const outputFile = path.join(process.cwd(), _screenshotsFolderName, uniqueFileName);
+        const outputFile = path.join(process.cwd(), this._screenshotsFolderName, uniqueFileName);
 
-        await browser.saveScreenshot(outputFile);
+        try {
+            await browser.saveScreenshot(outputFile);
+        } catch (e) {
+            console.error("❌ Failed to save screenshot:", e.message);
+        }
     }
 }
 export default new Logger();

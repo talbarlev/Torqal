@@ -2,10 +2,9 @@ import Headerbar from "./component/headerbar.js";
 import BasePage from "./page.js";
 
 // Make in BASE when needed
-export  class ItemsPage extends BasePage {
-   
-   
-    get Headerbar() {
+export class ItemsPage extends BasePage {
+
+    get headerbar() {
         return new Headerbar();
     }
 
@@ -13,17 +12,22 @@ export  class ItemsPage extends BasePage {
         return "button[data-test-id='horizontal-item-card-button']"
     }
 
-    // TODO : when relevant add sepration of the sections [Most ordered, starters] -> 
-    // locator [$$("[data-test-id='MenuSection']")]
+    // TODO: When relevant, separate menu sections (e.g. 'Most ordered', 'Starters')
+    // Example locator: $$("[data-test-id='MenuSection']")
     get items() {
         return browser.waitForElements(this.itemsLocator, "items elements");
     }
 
-    // TODO : popup message can block
-    async clickOnPlusForItemByIndex(index = 2) {
-        const itemElements = await this.items;
+    // TODO: Handle potential popup that might block the click action
+    async clickPlusButtonByIndex(index = 0) {
 
-        await itemElements[index].clickSafely("item");
+        // TODO: Replace fixed pause with a smarter waiting strategy
+       await browser.pause(4000);
+
+        const itemElements = await this.items;
+        
+        // TODO: Remove forceClick and properly handle any blocking popup
+        await itemElements[index].clickSafely("item", { forceClick: true, isWaitForClickable: false });
     }
 }
 

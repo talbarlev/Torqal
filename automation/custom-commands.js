@@ -34,11 +34,16 @@ class CustomCommand {
             return elements;
         }
 
-        async function waitToDisappearBrowser(selector, description, timeout = 5000, doTryFindElement = false) {
-            const element = await $(selector);
 
-            const exists = await element.isExisting();
-            if (!exists) {
+        async function waitToDisappearBrowser(selector, description, timeout = 5000, doTryFindElement = false) {
+            const startTime = Date.now();
+            let wasVisible = false;
+
+            Logger.info(`⏳ Waiting for '${description}' to disappear`);
+
+            const existsInitially = await $(selector).then(async el => await el.isExisting());
+
+            if (!existsInitially) {
                 if (doTryFindElement) {
                     throw new Error(`❌ '${description}' was not found on the page`);
                 } else {
@@ -47,18 +52,24 @@ class CustomCommand {
                 }
             }
 
-            const wasVisible = await element.isDisplayed();
+            // first check if it was visible at all
+            // @ts-ignore
+            wasVisible = await $(selector).then(async el => await el.isDisplayed().catch(() => false));
 
             await browser.waitUntil(async () => {
-                const stillExists = await element.isExisting();
-                const stillVisible = stillExists ? await element.isDisplayed() : false;
-
-                return wasVisible ? !stillVisible : !stillExists;
-            }, { timeout, interval: 100, timeoutMsg: `⏰ '${description}' did not disappear after ${timeout}ms`, }
-            );
+                const el = await $(selector);
+                const exists = await el.isExisting();
+                const visible = exists ? await el.isDisplayed().catch(() => false) : false;
+                return wasVisible ? !visible : !exists;
+            }, {
+                timeout,
+                interval: 100,
+                timeoutMsg: `⏰ '${description}' did not disappear after ${timeout}ms`
+            });
 
             Logger.info(`✅ '${description}' disappeared as expected`);
         }
+
 
 
         async function clickSafelyElement(elementDescription, { forceClick = false, shouldBeVisible = true, isWaitForClickable = true, timeout = configTimeout } = {}) {
@@ -108,7 +119,7 @@ class CustomCommand {
 
             }
             else {
-                 Logger.info(`clickSafely on '${elementDescription}'(${element.selector}) failed with parameters: isWaitForClickable= ${isWaitForClickable}, timeout= ${timeout}, forceClick= ${forceClick}`);
+                Logger.info(`clickSafely on '${elementDescription}'(${element.selector}) failed with parameters: isWaitForClickable= ${isWaitForClickable}, timeout= ${timeout}, forceClick= ${forceClick}`);
 
             }
         }
@@ -129,13 +140,51 @@ class CustomCommand {
             return await element;
         }
 
-        browser.addCommand("clickSafely", clickSafelyElement, true);
+        async function waitForElementsElement(selector, description, { shouldBeVisible = true, timeout = configTimeout } = {}) {
+            const container = this;
 
-        // browser.addCommand("clickSafely", clickSafelyBrowser);
+            Logger.info(`🔍 Searching for elements '${description}' inside ${container.selector}`);
+
+            const toTime = Date.now() + timeout;
+            let elements = [];
+
+            while (elements.length === 0 && Date.now() < toTime) {
+                await browser.pause(250);
+                elements = await container.$$(selector);
+            }
+
+            if (elements.length === 0) {
+                throw new Error(`❌ '${description}' not found inside ${container.selector} after ${timeout}ms`);
+            }
+
+            if (shouldBeVisible) {
+                const visibleElements = [];
+
+                for (const el of elements) {
+                    const isVisible = await el.isDisplayed();
+                    if (isVisible) {
+                        visibleElements.push(el);
+                    }
+                }
+
+                if (visibleElements.length === 0) {
+                    throw new Error(`❌ '${description}' elements inside ${container.selector} found, but none are visible after ${timeout}ms`);
+                }
+            }
+
+            Logger.info(`✅ Found ${elements.length} '${description}' elements inside ${container.selector}`);
+
+            return elements;
+        }
+
+
+        browser.addCommand("clickSafely", clickSafelyElement, true);
 
         browser.addCommand("waitToDisappear", waitToDisappearBrowser);
 
         browser.addCommand("waitForElements", waitForElementsBrowser);
+
+        browser.addCommand("waitForElements", waitForElementsElement, true);
 
         browser.addCommand("waitForElement", waitForElementElement, true);
 

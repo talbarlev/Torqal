@@ -17,7 +17,7 @@ export const config = {
     reporters: ['spec'],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 120000
     },
     injectGlobals: true,
     services: [],

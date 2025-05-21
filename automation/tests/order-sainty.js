@@ -1,12 +1,17 @@
-import  ItemsPage  from "pages/items-page.js";
-import { DISCVOERY_TABS_OPTION_ENGLISH } from "../data/constant-option.js";
+import ItemsPage from "../pages/items-page.js";
 import DiscoveryHomePage from "../pages/order-options/discovery-page.js";
 import ResturantPage from "../pages/order-options/resturant-page.js";
+import ItemOptionModal from "../pages/modal/tic-options-item-modal.js"
+
+import { expect } from 'chai';
+
+import { DISCVOERY_TABS_OPTION_ENGLISH } from "../data/constant-option.js";
+// TODO : waits ? for page to load ?
 
 describe('Orders [user not logged in]', function () {
     it(`Order [Resturant] -  One item from first resturant on page`, async function () {
         const amountOfItems = 1;
-        let price;
+        let priceOfItem;
 
         await DiscoveryHomePage.open()
 
@@ -16,20 +21,18 @@ describe('Orders [user not logged in]', function () {
 
         await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
 
-        await ItemsPage.clickOnPlusForItemByIndex(1);
+        await ItemsPage.clickPlusButtonByIndex(1);
 
-        
-        
-        await SelectionPopUp.tickChoices();
+        await ItemOptionModal.ticFromAllSections();
 
-        price = await SelectionPopUp.getPrice();
+        priceOfItem = await ItemOptionModal.getPrice();
 
         // wait to disapear
-        await SelectionPopUp.addToOrder();
+        await ItemOptionModal.addToOrder();
 
-        const dataFromShowItems = await ItemsPage.getDataFromShowItems();
+        const dataFromShowItems = await ItemsPage.headerbar.getDataFromShowItems();
 
-        expect(dataFromShowItems.price).equals(price)
-        expect(dataFromShowItems.amount).equals(amountOfItems)
+        expect(dataFromShowItems.amount == amountOfItems, "amount of item").to.be.true;
+        expect(dataFromShowItems.price == priceOfItem, "price of item").to.be.true
     });
 });
