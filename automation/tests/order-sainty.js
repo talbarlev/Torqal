@@ -4,7 +4,7 @@ import ResturantPage from "../pages/order-options/resturant-page.js";
 import ItemOptionModal from "../pages/modal/item-options-modal.js"
 import StorePage from "../pages/order-options/store-page.js";
 import itemsStorePage from "../pages/items-store-page.js";
-import  ListGridPage  from "../pages/listgrid-page.js";
+import ListGridPage from "../pages/listgrid-page.js";
 
 import { expect } from 'chai';
 
@@ -44,16 +44,15 @@ describe('Orders [user not logged in]', function () {
         const amountOfItems = 1, itemIndex = 1;
         let priceOfItem;
 
-
         await DiscoveryHomePage.open();
 
         await DiscoveryHomePage.waitForPageLoad();
 
         await DiscoveryHomePage.headersNavigationTabs.navigateToTab(DISCVOERY_TABS_OPTION_ENGLISH.STORES);
 
-        await StorePage.arrowListProduct.chooseElementFromListByIndex(1);
+        await StorePage.arrowListProduct.chooseElementFromListByIndex();
 
-        await ListGridPage.chooseElementFromListByIndex(1);
+        await ListGridPage.chooseElementFromListByIndex();
 
         await itemsStorePage.clickPlusButtonByIndex(itemIndex);
 
@@ -65,5 +64,55 @@ describe('Orders [user not logged in]', function () {
             `amount of item selected :"${amountOfItems}". amount in show items :"${dataFromShowItems.amount}"`).to.be.true;
         expect(dataFromShowItems.price == priceOfItem, `price of item selected :"${priceOfItem}". 
             price in show items :"${dataFromShowItems.price}"`).to.be.true
+    });
+
+
+    it.skip(`Order [discovery]`, async function () {
+        const amountOfItems = 1, resturantIndex = 1;
+        let priceOfItem;
+
+        await DiscoveryHomePage.open();
+
+        await DiscoveryHomePage.waitForPageLoad();
+
+        await DiscoveryHomePage.categoryList.chooseElementFromListByIndex(resturantIndex); // TODO
+
+        await ResturantPage.allProductsList.chooseElementFromListByIndex(4);
+
+        await ItemsResturantPage.clickPlusButtonByIndex(1);
+
+        await ItemOptionModal.ticFromAllSections();
+
+        priceOfItem = await ItemOptionModal.getPrice();
+
+        await ItemOptionModal.addToOrder();
+
+        const dataFromShowItems = await ItemsResturantPage.headerbar.getDataFromShowItems();
+
+        expect() // TODO
+    });
+
+    it.skip(`Order [searchbar] `, async function () {
+        const alwaysShown = "BBB";
+
+        await DiscoveryHomePage.open();
+
+        await DiscoveryHomePage.waitForPageLoad();
+
+        await DiscoveryHomePage.headerbar.search(alwaysShown) // TODO
+
+        // In Progress
+    });
+
+    it.skip(`Filtering `, async function () {
+        const alwaysShown = "BBB";
+
+        await DiscoveryHomePage.open();
+
+        await DiscoveryHomePage.waitForPageLoad();
+
+        await DiscoveryHomePage.headerbar.search(alwaysShown) // TODO
+
+        // In Progress
     });
 });

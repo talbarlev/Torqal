@@ -62,10 +62,8 @@ class ItemOptionsModal extends BasePage {
     }
 
     async ticFromAllSections() {
-        const container = await browser.waitForElement(this.pageLocator, "container of the popup widget");
+        const container = await browser.waitForElement(this.pageLocator, "container of the modal");
         const sections = await container.waitForElements("[data-capture-id='section']", "sections");
-
-        // const sections = await this.modalContainer.waitForElements(this.sectionsToTic, "sections");
 
         for (let index = 0; index < sections.length; index++) {
             await this.ticFromSectionByIndex(index);

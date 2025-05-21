@@ -43,7 +43,7 @@ export default class Headerbar extends BasePage {
 
     }
 
-    async search() {
+    async search(text) {
 
     }
 
