@@ -7,7 +7,7 @@ export class ListGridPage extends HomePage {
         return "[data-test-id='VenueVerticalListGrid'] > div"
     }
 
-    async chooseElementFromListByIndex(index) {
+    async chooseElementFromListByIndex(index = 0) {
         await waitForListToReachLength(this.elementsLocator);
 
         const elements = await browser.waitForElements(this.elementsLocator);
