@@ -10,7 +10,7 @@ import Logger from "../Logger.js"; // עדכן את הנתיב לפי הצורך
  * @param {number} [options.minLength=0] - Minimum number of elements expected.
  * @param {number} [options.timeout=3000] - Max time to wait in milliseconds.
  */
-export async function waitForListToReachLength(locator, { description = "list", minLength = 0, timeout = 3000 } = {}) {
+export async function waitForListToReachLength(locator, { description = "list", minLength = 1, timeout = 3000 } = {}) {
     await browser.waitUntil(async () => {
         const elements = await browser.waitForElements(locator);
         Logger.info(`length ${elements.length}, expected at least: ${minLength}`);
